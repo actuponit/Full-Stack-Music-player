@@ -28,10 +28,6 @@ const infoStyle = css`
     gap: 5px;
 `
 
-const fetchMusic = async (id) => {
-    const res = await fetch("http://localhost:3000/api/music/66227421c6df342cd1748ef6");
-    const data = await res.json();
-}
 const SingleMusic = () => {
     const { id }= useParams();
     const navigate = useNavigate();

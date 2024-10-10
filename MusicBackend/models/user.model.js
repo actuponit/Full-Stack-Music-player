@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 export const PlayList = new mongoose.Schema({
     title: {
         type: String,
-        unique: true
+        sparse: true,
+        unique: true,
     },
     musics: [
         {
@@ -49,8 +50,16 @@ const UserSchema = new mongoose.Schema({
     }]
 }, {
     timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            delete ret.password;
+            return ret;
+        }
+    }
 });
 
 const User = mongoose.model('User', UserSchema);
+
+
 
 export default User;

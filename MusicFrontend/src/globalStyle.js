@@ -11,6 +11,11 @@ const globalStyles = css`
     color: #FCFCFC;
   }
   
+  body {
+    background-color: #171719;
+    min-height: 100vh;
+  }
+  
   .active * {
     color: #00FFFF;
   }

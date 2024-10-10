@@ -15,6 +15,7 @@ import { logout, logoutSuccess } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import CustomToast from '../components/CustomToast.jsx';
 import { getMusicStart } from '../redux/slices/musicSlice.js';
+import useToast from '../hooks/useToast.jsx';
 
 
 const hotMusicStyle = css`
@@ -98,22 +99,6 @@ const ListItem = styled('ul')`
     padding-left: 3px;
   }
 `
-const notificationStyle = css`
-  position: absolute;
-  padding: 10px;
-  top: -20px;
-  opacity: 0;
-  font-size: 20px;
-  margin: 10px;
-  left: 50%;
-  background: #63676F;
-  border-radius: 10px;
-  transition: all 0.1s ease;
-`
-const showNotification = css`
-  top: 0;
-  opacity: 1;
-`
 
 const scroll = function (element, by) {
   element.scrollTo({
@@ -129,20 +114,19 @@ export function Home() {
   const musicSlice = useSelector(state => state.musics);
   const navigate = useNavigate();
 
+  useToast(auth.loggedout, () => {
+    dispatch(logoutSuccess(false));
+  });
+
   useEffect(() => {
     dispatch(getMusicStart());
-    if (auth.loggedout) {
-      setTimeout(() => {
-        dispatch(logoutSuccess(false));
-      }, 1500);
-    }
-  }, [auth.user, auth.loggedout]);
+  }, [auth.user,]);
   
     
     return (
             <Flex flexDirection='column' ml={5} mr={3} my={1} width={1}>
                 {/* <Box css={!auth.loggedout?notificationStyle:[notificationStyle, showNotification]}>Successfully Logged Out</Box> */}
-                <CustomToast text={"Successfully logged out!"} display={auth.loggedout} background={'#57cd7b'}/>
+                <CustomToast text={"Successfully logged out!"} display={auth.loggedout} background={'#00FFFF'}/>
                 <DropDown htmlFor='dropdown'>
                   <CheckBox type='checkbox' id='dropdown'/>
                   <StyledIcon icon={MdOutlineAccountCircle} width={15} margin={'0 5'} height={15}/> {auth?.user? auth.user.email: 'Account'} 

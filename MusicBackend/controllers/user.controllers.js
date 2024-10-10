@@ -25,7 +25,7 @@ export const register = async (req, res, next) => {
     await Token.create({refreshtoken: tokens.refreshToken})
     await newUser.save();
     
-    res.status(201).json(createSuccess('User has been created.', {...tokens, id: newUser._id, email: newUser.email}));
+    res.status(201).json(createSuccess('User has been created.', {...tokens, id: newUser._id, email: newUser.email, role: newUser.role}));
   } catch (err) {
     next(err);
   }
@@ -37,7 +37,7 @@ export const login = async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return next(createError(404, "User not found!"));
 
-    const isPasswordCorrect = await bcrypt.compare(
+    const isPasswordCorrect = bcrypt.compare(
       req.body.password,
       user.password
     );
@@ -49,7 +49,7 @@ export const login = async (req, res, next) => {
     
     res
       .status(200)
-      .json(createSuccess("Login successful.", {...tokens, id: user._id, email: user.email}));
+      .json(createSuccess("Login successful.", {...tokens, id: user._id, email: user.email, role: user.role}));
   } catch (err) {
     next(err);
   }

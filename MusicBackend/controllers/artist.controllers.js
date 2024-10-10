@@ -17,13 +17,11 @@ export const createArtist = async (req, res, next) => {
             photo['photo.url'] = 'images/'+image.filename
         }
         
-        const artist = await Artist.create(
-            {
-                name,
-                biography,
-                ...photo
-            }
-        );
+        const artist = await Artist.create({
+            name,
+            biography,
+            ...photo
+        });
 
         const response = {
             ...artist._doc,

@@ -1,6 +1,6 @@
 import { takeEvery, call, put, all } from 'redux-saga/effects';
 import axios from '../../axiosUtils.js';
-import { getMusicSuccess, getMusicFailure, getMusicStart } from '../slices/musicSlice.js';
+import { getMusicSuccess, getMusicFailure, getMusicStart, addMusicSuccess, addMusicStart } from '../slices/musicSlice.js';
 
 function* fetchMusic() {
     try {
@@ -11,6 +11,18 @@ function* fetchMusic() {
     }
 }
 
+function* addMusic(action) {
+    try {
+        const response = yield call(axios.post, 'music',action.payload, {headers: {'Content-Type': 'multipart/form-data'}});
+        yield put(addMusicSuccess(response.data.data));
+    } catch (error) {
+        yield put(getMusicFailure(error.message));
+    }
+}
+
 export function* watchMusic() {
-    yield takeEvery(getMusicStart.type, fetchMusic);
+    yield all([
+        takeEvery(getMusicStart.type, fetchMusic),
+        takeEvery(addMusicStart.type, addMusic)
+    ]);
 }

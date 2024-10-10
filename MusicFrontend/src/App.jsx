@@ -11,6 +11,8 @@ import {Routes, Route} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { SignUpPage } from './pages/signUpPage';
 import { LogInPage } from './pages/loginPage';
+import CreateMusic from './pages/createMusic';
+import CreateArtist from './pages/createArtist';
 
 
 function App() {
@@ -19,13 +21,15 @@ function App() {
       <>
       <Global styles={globalStyles} />
       <ThemeProvider theme={theme}>
-        <Flex bg='#171719'>
+        <Flex bg='#171719' height={'100%'}>
           <Routes>
             <Route path='/signup' element= {<SignUpPage />}/>
             <Route path='/login' element= {<LogInPage />}/>
             <Route path='/*' element={<Sidebar />}>  
               <Route index element= {<Home />}/>
               <Route path=':id' element= {<SingleMusic />}/>
+              <Route path='create-music' element= {<CreateMusic />}/>
+              <Route path='create-artist' element= {<CreateArtist />}/>
             </Route>
           </Routes>
 

@@ -5,6 +5,7 @@ import currentMusicReducer from './currentMusicSlice';
 import authReducer from './authSlice';
 import playListReducer from './playListSlice';
 import musicReducer from './musicSlice';
+import artistReducer from './artistSlice';
 
 const authPersistConfig = {
   key: 'auth',
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   playlist: playListReducer,
   musics: musicReducer,
+  artist: artistReducer,
 });
 
 export default rootReducer;
